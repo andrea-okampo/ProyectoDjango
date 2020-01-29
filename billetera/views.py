@@ -14,22 +14,40 @@ def Movement(request):
     template_name = "crear_movimiento.html"
     form = MovimientoForm()
 
-
     if request.method == 'POST':
         form = MovimientoForm(request.POST)
         if form.is_valid():
             form.save()
-
-            #se afecta el Balance
-            balance = Balance.objects.get(pk=1)
-            if request.POST['tipo'] == "Gasto": #Gasto
-                balance.saldo -= int(request.POST['monto'])
-                balance.gastos += int(request.POST['monto'])
-            else:
-                balance.saldo += int(request.POST['monto'])
-                balance.ingresos += int(request.POST['monto'])
-            balance.save()
-
-
+            updateBalance(request.POST['tipo'], int(request.POST['monto']))
             return HttpResponseRedirect('/')
     return render(request, template_name, {"form" : form})
+
+def updateBalance(tipo, monto):
+    #se afecta el Balance
+    balance = Balance.objects.get(pk=1)
+    if tipo == "Gasto": #Gasto
+        balance.saldo -= monto
+        balance.gastos += monto
+    else:
+        balance.saldo += monto
+        balance.ingresos += monto
+    balance.save()
+    return
+
+def deleteMovement(request, pk):
+    movimiento = Movimiento.objects.get(pk=pk)
+    alterBalance(movimiento.tipo, movimiento.monto)
+    movimiento.delete()
+    return HttpResponseRedirect('/')
+
+def alterBalance(tipo, monto):
+    #se afecta el Balance
+    balance = Balance.objects.get(pk=1)
+    if tipo == "Gasto": #Gasto
+        balance.saldo += monto
+        balance.gastos -= monto
+    else:
+        balance.saldo -= monto
+        balance.ingresos -= monto
+    balance.save()
+    return

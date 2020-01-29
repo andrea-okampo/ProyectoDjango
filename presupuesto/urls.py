@@ -5,5 +5,6 @@ from billetera import views
 urlpatterns = [
     path('', views.getBadget, name="home"),
     path('movimiento/', views.Movement, name="movimiento"),
+    path('borrarMovimiento/<int:pk>', views.deleteMovement, name="borrarMovimiento"),
     path('admin/', admin.site.urls),
 ]
