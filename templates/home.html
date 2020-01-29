@@ -12,9 +12,9 @@
 
       <div class="row">
         <div class="col s12 m12">
-          <div class="card pink lighten-3">
+          <div class="card pink darken-1">
             <div class="card-content black-text">
-              <span class="card-title">Mi Presupuesto</span>
+              <span class="card-title center-align"><h4>Mi Presupuesto</h4></span>
                 <table class="striped">
                   <thead>
                     <tr>
@@ -26,9 +26,9 @@
                   <tbody>
                     {% for data in balance %}
                     <tr>
-                      <td>{{ data.saldo|intcomma }}</td>
-                      <td>{{ data.ingresos|intcomma }}</td>
-                      <td>{{ data.gastos|intcomma }}</td>
+                      <td>$ {{ data.saldo|intcomma }}</td>
+                      <td>$ {{ data.ingresos|intcomma }}</td>
+                      <td>$ {{ data.gastos|intcomma }}</td>
                     </tr>
                     {% endfor %}
                   </tbody>
@@ -41,7 +41,7 @@
          <div class="col s12 m12">
            <div class="card purple lighten-1">
              <div class="card-content black-text">
-               <span class="card-title">Mis Movimientos</span>
+               <span class="card-title center-align"><h4>Mis Movimientos</h4></span>
                <table class="striped">
                  <thead>
                    <tr>
@@ -59,10 +59,10 @@
                      <td>{{ forloop.counter|ordinal }}</td>
                      <td>{{ mov.categoria.descripcion }}</td>
                      <td>{{ mov.tipo }}</td>
-                     <td>{{ mov.monto|intcomma }}</td>
+                     <td>$ {{ mov.monto|intcomma }}</td>
                      <td>{{ mov.fecha }}</td>
                      <td>
-                       <a href="{% url 'borrarMovimiento' mov.id %}">
+                       <a href="{% url 'borrarMovimiento' mov.id %}" class="btn-floating pulse pink darken-1">
                         <i class="material-icons">delete_forever</i>
                        </a>
                    </td>
